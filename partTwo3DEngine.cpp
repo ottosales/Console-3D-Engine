@@ -27,11 +27,11 @@ private:
     matrix4x4 projectionMatrix;
     float theta = 0;
 
-    void MultiplyMatrixVector(vect3& input, vect3& output, matrix4x4& mtx) {
+    void MultiplyMatrixVector(vect3 &input, vect3 &output, matrix4x4 &mtx) {
         output.x = input.x * mtx.m[0][0] + input.y * mtx.m[1][0] + input.z * mtx.m[2][0] + mtx.m[3][0];
         output.y = input.x * mtx.m[0][1] + input.y * mtx.m[1][1] + input.z * mtx.m[2][1] + mtx.m[3][1];
         output.z = input.x * mtx.m[0][2] + input.y * mtx.m[1][2] + input.z * mtx.m[2][2] + mtx.m[3][2];
-        float w = input.x * mtx.m[0][3] + input.y * mtx.m[1][3] + input.z * mtx.m[2][3] + mtx.m[3][3];
+        float w =  input.x * mtx.m[0][3] + input.y * mtx.m[1][3] + input.z * mtx.m[2][3] + mtx.m[3][3];
 
         if (w != 0.0f) {
             output.x /= w;
@@ -41,7 +41,7 @@ private:
     }
 
 public:
-    gameEngine3D() {
+    gameEngine3D () {
         m_sAppName = L"3D testing";
     }
 
@@ -88,7 +88,7 @@ public:
         return true;
     }
 
-    bool OnUserUpdate(float fElapsedTime) override {
+    bool OnUserUpdate (float fElapsedTime) override {
         Fill(0, 0, ScreenWidth(), ScreenHeight(), PIXEL_SOLID, FG_BLACK);
 
         matrix4x4 matRotZ, matRotX;
@@ -157,14 +157,14 @@ public:
 };
 
 int main() {
-    gameEngine3D partOne;
+    gameEngine3D partTwo;
 
-    if (partOne.ConstructConsole(256, 240, 3, 3)) {
+    if (partTwo.ConstructConsole(256, 240, 3, 3)) {
         std::cout << "everything went right :)\n";
-        partOne.Start();
+        partTwo.Start();
     }
     else {
-        std::cout << "careful, lad! something went wrong :(\n";
+        std::cout << "something went wrong :(\n";
     }
 
     return 0;
