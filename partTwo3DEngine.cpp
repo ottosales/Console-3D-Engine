@@ -157,11 +157,11 @@ public:
 };
 
 int main() {
-    gameEngine3D demo;
+    gameEngine3D partTwo;
 
-    if (demo.ConstructConsole(256, 240, 3, 3)) {
+    if (partTwo.ConstructConsole(256, 240, 3, 3)) {
         std::cout << "everything went right :)\n";
-        demo.Start();
+        partTwo.Start();
     }
     else {
         std::cout << "something went wrong :(\n";

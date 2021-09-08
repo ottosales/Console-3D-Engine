@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="partOne3DEngine.cpp">
+    <ClCompile Include="partTwo3DEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
