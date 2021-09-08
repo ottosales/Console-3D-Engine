@@ -101,10 +101,10 @@ public:
         matRotZ.m[3][3] = 1;
 
         matRotX.m[0][0] = 1;
-        matRotX.m[1][1] = cosf(theta);
-        matRotX.m[1][2] = sinf(theta);
-        matRotX.m[2][1] = -sinf(theta);
-        matRotX.m[2][2] = cosf(theta);
+        matRotX.m[1][1] = cosf(theta * 0.5f);
+        matRotX.m[1][2] = sinf(theta * 0.5f);
+        matRotX.m[2][1] = -sinf(theta * 0.5f);
+        matRotX.m[2][2] = cosf(theta * 0.5f);
         matRotX.m[3][3] = 1;
 
         for (auto triLoop : cube.triangleMesh) {
