@@ -48,28 +48,28 @@ public:
     bool OnUserCreate() override {
         cube.triangleMesh = {
             // south pannel
-            {0.0f, 0.0f, 0.0f,    0.0f, 1.0f, 0.0f,    1.0f, 1.0f, 0.0f},
-            {0.0f, 0.0f, 0.0f,    1.0f, 1.0f, 0.0f,    1.0f, 0.0f, 0.0f},
+            { 0.0f, 0.0f, 0.0f,    0.0f, 1.0f, 0.0f,    1.0f, 1.0f, 0.0f },
+            { 0.0f, 0.0f, 0.0f,    1.0f, 1.0f, 0.0f,    1.0f, 0.0f, 0.0f },
 
             // east pannel
-            {1.0f, 0.0f, 0.0f,    1.0f, 1.0f, 0.0f,    1.0f, 1.0f, 1.0f},
-            {1.0f, 0.0f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 0.0f, 1.0f},
+            { 1.0f, 0.0f, 0.0f,    1.0f, 1.0f, 0.0f,    1.0f, 1.0f, 1.0f },
+            { 1.0f, 0.0f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 0.0f, 1.0f },
 
             // north pannel
-            {1.0f, 0.0f, 1.0f,    1.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f},
-            {1.0f, 0.0f, 1.0f,    0.0f, 1.0f, 1.0f,    0.0f, 0.0f, 1.0f},
+            { 1.0f, 0.0f, 1.0f,    1.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f },
+            { 1.0f, 0.0f, 1.0f,    0.0f, 1.0f, 1.0f,    0.0f, 0.0f, 1.0f },
 
             // west pannel
-            {0.0f, 0.0f, 1.0f,    0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 0.0f},
-            {0.0f, 0.0f, 1.0f,    0.0f, 1.0f, 0.0f,    0.0f, 0.0f, 0.0f},
+            { 0.0f, 0.0f, 1.0f,    0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 0.0f },
+            { 0.0f, 0.0f, 1.0f,    0.0f, 1.0f, 0.0f,    0.0f, 0.0f, 0.0f },
 
             // top pannel
-            {0.0f, 1.0f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 1.0f, 0.0f},
-            {0.0f, 1.0f, 0.0f,    0.0f, 1.0f, 1.0f,    0.0f, 1.0f, 1.0f},
+            { 0.0f, 1.0f, 0.0f,    0.0f, 1.0f, 1.0f,    1.0f, 1.0f, 1.0f },
+            { 0.0f, 1.0f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 1.0f, 0.0f },
 
             // bottom pannel
-            {0.0f, 0.0f, 0.0f,    1.0f, 0.0f, 1.0f,    1.0f, 0.0f, 0.0f},
-            {0.0f, 0.0f, 0.0f,    1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 1.0f}
+            { 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f },
+            { 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f },
         };
 
         float zFar = 1000.0f;
@@ -120,36 +120,54 @@ public:
             MultiplyMatrixVector(triangleRotatedZ.point[1], triangleRotatedX.point[1], matRotX);
             MultiplyMatrixVector(triangleRotatedZ.point[2], triangleRotatedX.point[2], matRotX);
 
-
             triangleTranslated = triangleRotatedX;
             triangleTranslated.point[0].z += 3.0f;
             triangleTranslated.point[1].z += 3.0f;
             triangleTranslated.point[2].z += 3.0f;
 
-            MultiplyMatrixVector(triangleTranslated.point[0], triangleProjected.point[0], projectionMatrix);
-            MultiplyMatrixVector(triangleTranslated.point[1], triangleProjected.point[1], projectionMatrix);
-            MultiplyMatrixVector(triangleTranslated.point[2], triangleProjected.point[2], projectionMatrix);
+            vect3 normal, line1, line2;
+            line1.x = triangleTranslated.point[1].x - triangleTranslated.point[0].x;
+            line1.y = triangleTranslated.point[1].y - triangleTranslated.point[0].y;
+            line1.z = triangleTranslated.point[1].z - triangleTranslated.point[0].z;
 
-            // forgive me for these warcrimes
-            triangleProjected.point[0].x += 1.0f;
-            triangleProjected.point[0].y += 1.0f;
-            triangleProjected.point[1].x += 1.0f;
-            triangleProjected.point[1].y += 1.0f;
-            triangleProjected.point[2].x += 1.0f;
-            triangleProjected.point[2].y += 1.0f;
+            line2.x = triangleTranslated.point[2].x - triangleTranslated.point[0].x;
+            line2.y = triangleTranslated.point[2].y - triangleTranslated.point[0].y;
+            line2.z = triangleTranslated.point[2].z - triangleTranslated.point[0].z;
 
-            triangleProjected.point[0].x *= 0.5f * (float)ScreenWidth();
-            triangleProjected.point[0].y *= 0.5f * (float)ScreenHeight();
-            triangleProjected.point[1].x *= 0.5f * (float)ScreenWidth();
-            triangleProjected.point[1].y *= 0.5f * (float)ScreenHeight();
-            triangleProjected.point[2].x *= 0.5f * (float)ScreenWidth();
-            triangleProjected.point[2].y *= 0.5f * (float)ScreenHeight();
+            normal.x = line1.y * line2.z - line1.z * line2.y;
+            normal.y = line1.z * line2.x - line1.x * line2.z;
+            normal.z = line1.x * line2.y - line1.y * line2.x;
 
+            float normalLength = sqrtf(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+            normal.x /= normalLength;
+            normal.y /= normalLength;
+            normal.z /= normalLength;
 
-            DrawTriangle(triangleProjected.point[0].x, triangleProjected.point[0].y,
-                triangleProjected.point[1].x, triangleProjected.point[1].y,
-                triangleProjected.point[2].x, triangleProjected.point[2].y,
-                PIXEL_SOLID, FG_WHITE);
+            if (normal.z < 0.0f) {
+                MultiplyMatrixVector(triangleTranslated.point[0], triangleProjected.point[0], projectionMatrix);
+                MultiplyMatrixVector(triangleTranslated.point[1], triangleProjected.point[1], projectionMatrix);
+                MultiplyMatrixVector(triangleTranslated.point[2], triangleProjected.point[2], projectionMatrix);
+
+                // forgive me for these warcrimes
+                triangleProjected.point[0].x += 1.0f;
+                triangleProjected.point[0].y += 1.0f;
+                triangleProjected.point[1].x += 1.0f;
+                triangleProjected.point[1].y += 1.0f;
+                triangleProjected.point[2].x += 1.0f;
+                triangleProjected.point[2].y += 1.0f;
+
+                triangleProjected.point[0].x *= 0.5f * (float)ScreenWidth();
+                triangleProjected.point[0].y *= 0.5f * (float)ScreenHeight();
+                triangleProjected.point[1].x *= 0.5f * (float)ScreenWidth();
+                triangleProjected.point[1].y *= 0.5f * (float)ScreenHeight();
+                triangleProjected.point[2].x *= 0.5f * (float)ScreenWidth();
+                triangleProjected.point[2].y *= 0.5f * (float)ScreenHeight();
+
+                DrawTriangle(triangleProjected.point[0].x, triangleProjected.point[0].y,
+                    triangleProjected.point[1].x, triangleProjected.point[1].y,
+                    triangleProjected.point[2].x, triangleProjected.point[2].y,
+                    PIXEL_SOLID, FG_WHITE);
+            }
         }
 
         return true;
